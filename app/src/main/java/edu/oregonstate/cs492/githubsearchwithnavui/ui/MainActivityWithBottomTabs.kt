@@ -7,13 +7,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.MenuProvider
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.oregonstate.cs492.githubsearchwithnavui.R
 
 class MainActivityWithBottomTabs : AppCompatActivity() {
@@ -34,29 +37,36 @@ class MainActivityWithBottomTabs : AppCompatActivity() {
         setSupportActionBar(appBar)
         setupActionBarWithNavController(navController, appBarConfig)
 
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_nav)
+        bottomNav.setupWithNavController(navController)
+        bottomNav.setOnApplyWindowInsetsListener { view, insets ->
+            view.updatePadding(bottom = 0)
+            insets
+        }
+
         /*
          * This MenuProvider powers the top app bar actions for all screens under this activity.
          */
-        addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.activity_main_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.action_settings -> {
-                            findNavController(R.id.nav_host_fragment).navigate(R.id.navigate_to_settings)
-                            true
-                        }
-                        else -> false
-                    }
-                }
-
-            },
-            this,
-            Lifecycle.State.STARTED
-        )
+//        addMenuProvider(
+//            object : MenuProvider {
+//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//                    menuInflater.inflate(R.menu.activity_main_menu, menu)
+//                }
+//
+//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//                    return when (menuItem.itemId) {
+//                        R.id.action_settings -> {
+//                            findNavController(R.id.nav_host_fragment).navigate(R.id.navigate_to_settings)
+//                            true
+//                        }
+//                        else -> false
+//                    }
+//                }
+//
+//            },
+//            this,
+//            Lifecycle.State.STARTED
+//        )
     }
 
     override fun onSupportNavigateUp(): Boolean {
