@@ -1,0 +1,3 @@
+# GitHub Search with Nav UI
+
+In this project, we'll explore how to use the Navigation UI library to add advanced navigational components to the app.  To work with this project, you can clone it from GitHub onto your development machine and then import it into Android Studio using File → New → Import...
